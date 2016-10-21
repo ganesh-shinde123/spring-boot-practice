@@ -1,0 +1,62 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.0.RELEASE")
+    }
+}
+apply plugin: 'eclipse'
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'spring-boot'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+sourceSets {
+	main {
+		java.srcDirs = ['src/main/java', 'src/main/resources' ]
+		resources.srcDirs = ['src/main/resources']
+	}
+	test {
+		java.srcDirs = ['src/test/java']
+	}
+}
+
+repositories {
+    mavenCentral()
+}
+
+jar {
+	 baseName = 'spring-boot-sample'
+    version =  '0.1.0'
+}
+
+dependencies {
+	compile 'org.springframework.boot:spring-boot-starter'
+	compile 'org.springframework.boot:spring-boot-starter-web'
+	compile 'javax.servlet:javax.servlet-api'
+	compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	compile 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:2.0.0'
+	compile 'org.thymeleaf:thymeleaf-spring4:3.0.0.RELEASE'
+	compile 'org.thymeleaf:thymeleaf:3.0.0.RELEASE'
+    compile 'org.slf4j:slf4j-api:1.7.21'
+    
+    testCompile 'junit:junit:4.12'
+    
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+}
+
+war {
+	baseName = 'spring-boot-sample'
+}
+
+
+configurations { providedRuntime }
+
+bootRun {
+	systemProperty 'server.port', '9000'
+	args "--appurl=http://localhost:9000"
+	main = 'com.bitwise.demo.spring.boot.SpringBootSampleApplication'
+}
